@@ -1,0 +1,70 @@
+CREATE TABLE Professor(
+  id_professor INT AUTO_INCREMENT PRIMARY KEY,
+  Nome_professor VARCHAR(50) NOT NULL,
+  Admissão DATE NOT NULL,
+  CPF CHAR(11) NOT NULL,
+  Email VARCHAR(100) NOT NULL,
+  Telefone CHAR(20) NOT NULL,
+  Aniversário DATE NOT NULL,
+  Area_formação VARCHAR(50) NOT NULL,
+  Status_professor BOOLEAN NOT NULL DEFAULT TRUE,
+  Endereço VARCHAR(50) NOT NULL,
+  Carga_horária TIME NOT NULL
+  );
+  
+ ALTER TABLE Professor
+MODIFY COLUMN Carga_horária INT NOT NULL;
+
+CREATE TABLE Disciplina(
+  id_disciplina INT AUTO_INCREMENT PRIMARY KEY,
+  Nome_disciplina VARCHAR(100) NOT NULL,
+  Carga_horaria_padrao INT NOT NULL,
+  Area_conhecimento VARCHAR(50) NOT NULL
+);
+
+CREATE TABLE Curso(
+  id_curso INT AUTO_INCREMENT PRIMARY KEY,
+  Nome_curso VARCHAR(100) NOT NULL,
+  Nivel_curso VARCHAR(50) NOT NULL,
+  Modalidade_curso VARCHAR(50) NOT NULL,
+  Status_curso BOOLEAN NOT NULL DEFAULT TRUE
+);
+
+CREATE TABLE Departamento(
+  id_departamento INT AUTO_INCREMENT PRIMARY KEY,
+  Nome_departamento VARCHAR(100) NOT NULL,
+  Centro_academico VARCHAR(100),
+  Campus VARCHAR(100)
+);
+
+CREATE TABLE Tempo(
+  id_tempo INT AUTO_INCREMENT PRIMARY KEY,
+  Data_completa DATE NOT NULL,
+  Dia INT NOT NULL,
+  Mes INT NOT NULL,
+  Nome_mes VARCHAR(20) NOT NULL,
+  Trimestre INT NOT NULL,
+  Semestre INT NOT NULL,
+  Ano INT NOT NULL
+);
+
+CREATE TABLE Fato_Oferta_Disciplina(
+  sk_fato INT AUTO_INCREMENT PRIMARY KEY,
+  id_professor INT NOT NULL,
+  id_disciplina INT NOT NULL,
+  id_curso INT NOT NULL,
+  id_departamento INT NOT NULL,
+  id_tempo_oferta INT NOT NULL,
+  qtd_oferta INT NOT NULL DEFAULT 1,
+  carga_horaria_disciplina INT NOT NULL,
+  FOREIGN KEY (id_professor) REFERENCES Professor(id_professor),
+  FOREIGN KEY (id_disciplina) REFERENCES Disciplina(id_disciplina),
+  FOREIGN KEY (id_curso) REFERENCES Curso(id_curso),
+  FOREIGN KEY (id_departamento) REFERENCES Departamento(id_departamento),
+  FOREIGN KEY (id_tempo_oferta) REFERENCES Tempo(id_tempo)
+); 
+  
+  ALTER TABLE Professor
+ADD COLUMN id_departamento INT,
+ADD CONSTRAINT fk_professor_departamento
+FOREIGN KEY (id_departamento) REFERENCES Departamento(id_departamento);
