@@ -1,0 +1,63 @@
+Table Professor {
+  id_professor int [pk, increment]
+  Nome_professor varchar(50) [not null]
+  Admissao date [not null]
+  CPF char(11) [not null]
+  Email varchar(100) [not null]
+  Telefone char(20) [not null]
+  Aniversario date [not null]
+  Area_formacao varchar(50) [not null]
+  Status_professor boolean [not null, default: true]
+  Endereco varchar(50) [not null]
+  Carga_horaria int [not null]
+  id_departamento int
+}
+
+Table Disciplina {
+  id_disciplina int [pk, increment]
+  Nome_disciplina varchar(100) [not null]
+  Carga_horaria_padrao int [not null]
+  Area_conhecimento varchar(50) [not null]
+}
+
+Table Curso {
+  id_curso int [pk, increment]
+  Nome_curso varchar(100) [not null]
+  Nivel_curso varchar(50) [not null]
+  Modalidade_curso varchar(50) [not null]
+  Status_curso boolean [not null, default: true]
+}
+
+Table Departamento {
+  id_departamento int [pk, increment]
+  Nome_departamento varchar(100) [not null]
+  Centro_academico varchar(100)
+  Campus varchar(100)
+}
+
+Table Tempo {
+  id_tempo int [pk, increment]
+  Data_completa date [not null]
+  Dia int [not null]
+  Mes int [not null]
+  Nome_mes varchar(20) [not null]
+  Trimestre int [not null]
+  Semestre int [not null]
+  Ano int [not null]
+}
+
+Table Fato_Oferta_Disciplina {
+  sk_fato int [pk, increment]
+  id_professor int [not null]
+  id_disciplina int [not null]
+  id_curso int [not null]
+  id_tempo_oferta int [not null]
+  qtd_oferta int [not null, default: 1]
+  carga_horaria_disciplina int [not null]
+}
+
+Ref: Professor.id_departamento > Departamento.id_departamento
+Ref: Fato_Oferta_Disciplina.id_professor > Professor.id_professor
+Ref: Fato_Oferta_Disciplina.id_disciplina > Disciplina.id_disciplina
+Ref: Fato_Oferta_Disciplina.id_curso > Curso.id_curso
+Ref: Fato_Oferta_Disciplina.id_tempo_oferta > Tempo.id_tempo
